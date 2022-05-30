@@ -17,8 +17,8 @@ class TelegramInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     final bot = TelegramSendMessageProvider(
-      token: '5482069008:AAE_kh5NpX4Z88ONdvyWN3U335flPF6X6_M',
-      chatId: -600747526,
+      token: token,
+      chatId: chatId,
     );
     final projectName = projectId != null ? '#${projectId!}' : '';
     bot.sendError(
