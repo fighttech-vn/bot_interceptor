@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   dart_telegram_bot: ^0.6.1
+  dio: ^4.0.6
+  uuid: 3.0.6
 
 dev_dependencies:
   flutter_test:
