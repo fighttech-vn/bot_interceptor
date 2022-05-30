@@ -23,7 +23,7 @@ class TelegramInterceptor extends Interceptor {
     final projectName = projectId != null ? '#${projectId!}' : '';
     bot.sendError(
       message: '''
-$projectName #${const Uuid().v4()}
+$projectName ${const Uuid().v4()}
 <code>{
   'from': 'onError',
   'Time': ${DateTime.now().toString()},
