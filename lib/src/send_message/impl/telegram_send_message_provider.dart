@@ -1,18 +1,19 @@
 import 'package:dart_telegram_bot/dart_telegram_bot.dart';
 import 'package:dart_telegram_bot/telegram_entities.dart';
 
-import '../bot_interceptor.dart';
+import '../send_message_provider.dart';
 
-class TelegramBotInterceptor extends BotInterceptor {
+class TelegramSendMessageProvider extends SendMessageProvider {
   final int chatId;
   final String token;
-  final Bot _bot;
 
-  TelegramBotInterceptor({required this.chatId, required this.token})
+  TelegramSendMessageProvider({required this.chatId, required this.token})
       : _bot = Bot(token: token);
 
+  final Bot _bot;
+
   @override
-  Future<void> sendErrorMessage({required String message}) async {
+  Future<void> sendError({required String message}) async {
     try {
       await _bot.sendMessage(
         ChatID(chatId),
