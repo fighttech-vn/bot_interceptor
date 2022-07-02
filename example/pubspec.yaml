@@ -1,6 +1,6 @@
 name: bot_interceptor
 description: Fighttech Flutter Bot Interceptor
-version: 0.0.4
+version: 0.0.3
 homepage: https://github.com/FightTech-VN/bot_interceptor
 
 environment:
@@ -8,9 +8,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  dart_telegram_bot: ^0.6.1
   dio: ^4.0.6
-  uuid: 3.0.6
-
-dev_dependencies:
-  flutter_lints: ^2.0.1
+  bot_interceptor:
+    path: ../

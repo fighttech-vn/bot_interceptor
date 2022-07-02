@@ -1,3 +1,6 @@
+## 0.0.4
++ add example doc `LoggerInterceptor`
+
 ## 0.0.3
 
 + add readme doc example code
