@@ -1,3 +1,3 @@
 abstract class SendMessageProvider {
-  Future<void> sendError({required String message});
+  Future<void> send({required String message});
 }

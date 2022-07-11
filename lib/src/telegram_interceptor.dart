@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
 
 import 'send_message/impl/telegram_send_message_provider.dart';
-
 class TelegramInterceptor extends Interceptor {
   final String token;
   final int chatId;
@@ -21,7 +20,7 @@ class TelegramInterceptor extends Interceptor {
       chatId: chatId,
     );
     final projectName = projectId != null ? '#${projectId!}' : '';
-    bot.sendError(
+    bot.send(
       message: '''
 $projectName ${const Uuid().v4()}
 <code>{

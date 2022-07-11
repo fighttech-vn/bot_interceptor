@@ -1,3 +1,6 @@
+## 0.0.5
+
++ Support send TelegramBot with `TelegramSendMessageProvider`
 ## 0.0.4
 
 + add readme create bot telegram

@@ -13,7 +13,7 @@ class TelegramSendMessageProvider extends SendMessageProvider {
   final Bot _bot;
 
   @override
-  Future<void> sendError({required String message}) async {
+  Future<void> send({required String message}) async {
     try {
       await _bot.sendMessage(
         ChatID(chatId),
