@@ -1,9 +1,9 @@
 // Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 String prettyJsonStr(Map<dynamic, dynamic> json) {
   final encoder = JsonEncoder.withIndent('  ', (data) => data.toString());
@@ -21,7 +21,8 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint(prettyJsonStr(
+    debugger(
+        message: prettyJsonStr(
       {
         'from': 'onRequest',
         'Time': DateTime.now().toString(),
@@ -39,7 +40,8 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onResponse(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
-    debugPrint(prettyJsonStr({
+    debugger(
+        message: prettyJsonStr({
       'from': 'onResponse',
       'Time': DateTime.now().toString(),
       'statusCode': response.statusCode,
@@ -55,7 +57,8 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    debugPrint(prettyJsonStr({
+    debugger(
+        message: prettyJsonStr({
       'from': 'onError',
       'Time': DateTime.now().toString(),
       'baseUrl': err.requestOptions.baseUrl,
