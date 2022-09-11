@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
+import 'utils/print.dart';
+
 String prettyJsonStr(Map<dynamic, dynamic> json) {
   final encoder = JsonEncoder.withIndent('  ', (data) => data.toString());
   return encoder.convert(json);
@@ -19,7 +21,7 @@ class LoggerInterceptor extends Interceptor {
   });
 
   void _print(dynamic message) {
-    print(message);
+    debugPrint(message);
   }
 
   @override
