@@ -3,7 +3,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
+import 'utils/print.dart';
 
 String prettyJsonStr(Map<dynamic, dynamic> json) {
   final encoder = JsonEncoder.withIndent('  ', (data) => data.toString());
@@ -19,9 +20,13 @@ class LoggerInterceptor extends Interceptor {
     this.ignoreReponseDataLog,
   });
 
+  void _print(dynamic message) {
+    debugPrint(message);
+  }
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint(prettyJsonStr(
+    _print(prettyJsonStr(
       {
         'from': 'onRequest',
         'Time': DateTime.now().toString(),
@@ -39,7 +44,7 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onResponse(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
-    debugPrint(prettyJsonStr({
+    _print(prettyJsonStr({
       'from': 'onResponse',
       'Time': DateTime.now().toString(),
       'statusCode': response.statusCode,
@@ -55,7 +60,7 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    debugPrint(prettyJsonStr({
+    _print(prettyJsonStr({
       'from': 'onError',
       'Time': DateTime.now().toString(),
       'baseUrl': err.requestOptions.baseUrl,
