@@ -1,7 +1,6 @@
 // Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
@@ -19,10 +18,13 @@ class LoggerInterceptor extends Interceptor {
     this.ignoreReponseDataLog,
   });
 
+  void _print(dynamic message) {
+    print(message);
+  }
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugger(
-        message: prettyJsonStr(
+    _print(prettyJsonStr(
       {
         'from': 'onRequest',
         'Time': DateTime.now().toString(),
@@ -40,8 +42,7 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onResponse(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
-    debugger(
-        message: prettyJsonStr({
+    _print(prettyJsonStr({
       'from': 'onResponse',
       'Time': DateTime.now().toString(),
       'statusCode': response.statusCode,
@@ -57,8 +58,7 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    debugger(
-        message: prettyJsonStr({
+    _print(prettyJsonStr({
       'from': 'onError',
       'Time': DateTime.now().toString(),
       'baseUrl': err.requestOptions.baseUrl,
