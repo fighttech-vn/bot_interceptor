@@ -29,41 +29,41 @@ Fighttech Flutter Image Widget
 ## Step 1: Create new bot
 - Open telegram -> search "BotFather" and enter message: "/newbot"
 
-![create_new](./doc/1.create_new.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/1.create_new.png?raw=true)
 
 ## Step 2: Enter bot name
 
-![enter_name](./doc/2.enter_name.png)
+![enter_name](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/2.enter_name.png?raw=true)
 
 ## Step 3: Enter username
 - Enter username your bot.  It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
 
-![create_new](./doc/3.enter_username.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/3.enter_username.png?raw=true)
 
 ## Step 4: Start bot
 - Open your bot
 
-![create_new](./doc/4.1.open_your_bot.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/4.1.open_your_bot.png?raw=true)
 
 - Start bot
 
-![create_new](./doc/4.2.start_bot.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/4.2.start_bot.png?raw=true)
 
 ## Step 5: Get all bot
-![create_new](./doc/5.get_all_my_bot.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/5.get_all_my_bot.png?raw=true)
 
 ## Step 6: Open bot setting and get API TOKEN
 - Select your bot and choose API TOKEN                                                                                                                                                     
-![create_new](./doc/6.bot_setting.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/6.bot_setting.png?raw=true)
 
 ## Step 7: Add bot to group
-![create_new](./doc/7.add_bot_to_group.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/7.add_bot_to_group.png?raw=true)
 
 ## Step 8: Get group id
-![create_new](./doc/8.get_group_id.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/8.get_group_id.png?raw=true)
 
 ## Step 9: Test send message
-![create_new](./doc/9.test_send_message.png)
+![create_new](https://raw.githubusercontent.com/FightTech-VN/bot_interceptor/develop/doc/9.test_send_message.png?raw=true)
 
 ## Curl
 
