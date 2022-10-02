@@ -32,10 +32,10 @@ class LoggerInterceptor extends Interceptor {
         'Time': DateTime.now().toString(),
         'baseUrl': options.baseUrl,
         'path': options.path,
+        'queryParameters': options.queryParameters,
         'headers': options.headers,
         'method': options.method,
         'requestData': options.data,
-        'queryParameters': options.queryParameters,
       },
     ));
     super.onRequest(options, handler);
@@ -47,10 +47,12 @@ class LoggerInterceptor extends Interceptor {
     _print(prettyJsonStr({
       'from': 'onResponse',
       'Time': DateTime.now().toString(),
+      'method': response.requestOptions.method,
       'statusCode': response.statusCode,
       'baseUrl': response.requestOptions.baseUrl,
       'path': response.requestOptions.path,
-      'method': response.requestOptions.method,
+      'header': response.requestOptions.headers,
+      'queryParameters': response.requestOptions.queryParameters,
       if (ignoreReponseDataLog?.call(response) != false)
         'responseData': response.data,
     }));
@@ -63,12 +65,14 @@ class LoggerInterceptor extends Interceptor {
     _print(prettyJsonStr({
       'from': 'onError',
       'Time': DateTime.now().toString(),
+      'method': err.requestOptions.method,
+      'statusCode': err.response?.statusCode,
       'baseUrl': err.requestOptions.baseUrl,
-      'header': err.requestOptions.headers,
       'path': err.requestOptions.path,
+      'header': err.requestOptions.headers,
+      'queryParameters': err.requestOptions.queryParameters,
       'type': err.type,
       'message': err.message,
-      'statusCode': err.response?.statusCode,
       'error': err.error,
       'responseData': err.requestOptions.data
     }));
