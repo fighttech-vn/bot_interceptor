@@ -21,7 +21,7 @@ class TelegramInterceptor extends Interceptor {
       token: token,
       chatId: chatId,
     );
-    _projectName = projectId != null ? '#${projectId!}' : '';
+    _projectName = projectId != null ? projectId! : '';
     _projectName = '${_projectName!} ${const Uuid().v4()}';
   }
 
