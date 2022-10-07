@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
 
@@ -28,6 +30,13 @@ class TelegramInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final formData = options.data;
+    var formDataText = options.data;
+    
+    if (formData is FormData) {
+      formDataText = jsonEncode(formData.fields.map((e) => e).toList());
+    }
+
     _messageProvider.send(
       message: '''
 $_projectName
@@ -41,7 +50,7 @@ $_projectName
         'queryParameters': ${options.queryParameters},
         'headers': ${options.headers},
         'method': ${options.method},
-        'requestData': ${options.data},
+        'requestData': $formDataText,
 }</code>
     ''',
     );
