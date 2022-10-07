@@ -32,10 +32,11 @@ class TelegramInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final formData = options.data;
     var formDataText = options.data;
-    
+
     if (formData is FormData) {
       formDataText = jsonEncode(formData.fields.map((e) => e).toList());
-      formDataText = formDataText + jsonEncode(formData.files.map((e) => e.value.filename).toList());
+      formDataText = formDataText +
+          jsonEncode(formData.files.map((e) => e.value.filename).toList());
     }
 
     _messageProvider.send(
@@ -69,9 +70,8 @@ $_projectName
   'Time': ${DateTime.now().toString()},
   'baseUrl': '${response.requestOptions.baseUrl}',
   'path': ${response.requestOptions.path},
-  'path': ${response.requestOptions.path},
   'method': ${response.requestOptions.method},
-   'responseData': ${response.data},
+  'responseData': ${response.data},
 }</code>
     ''',
       );
@@ -94,11 +94,13 @@ $_projectName
   'message': ${err.message},
   'statusCode': ${err.response?.statusCode},
   'error': ${err.error},
-  'responseData': ${err.requestOptions.data},
+  'requestOptionsData': ${err.requestOptions.data},
+  'responseData': ${err.response?.data},
   'raw': ${err.toString()}
 }</code>
     ''',
     );
+
     super.onError(err, handler);
   }
 }
