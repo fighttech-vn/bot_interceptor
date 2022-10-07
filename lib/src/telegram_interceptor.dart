@@ -35,6 +35,7 @@ class TelegramInterceptor extends Interceptor {
     
     if (formData is FormData) {
       formDataText = jsonEncode(formData.fields.map((e) => e).toList());
+      formDataText = formDataText + jsonEncode(formData.files.map((e) => e.value.filename).toList());
     }
 
     _messageProvider.send(
