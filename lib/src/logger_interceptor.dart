@@ -30,8 +30,10 @@ class LoggerInterceptor extends Interceptor {
       {
         'from': 'onRequest',
         'Time': DateTime.now().toString(),
+        'statusCode': options.data,
         'baseUrl': options.baseUrl,
         'path': options.path,
+        'header': options.headers,
         'queryParameters': options.queryParameters,
         'headers': options.headers,
         'method': options.method,

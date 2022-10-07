@@ -19,18 +19,40 @@ class TelegramInterceptor extends Interceptor {
       token: token,
       chatId: chatId,
     );
+    _projectName = projectId != null ? '#${projectId!}' : '';
   }
 
   late TelegramSendMessageProvider _messageProvider;
+  String? _projectName;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    _messageProvider.send(
+      message: '''
+$_projectName ${const Uuid().v4()}
+<code>{
+   'from': 'onRequest',
+        'Time': ${DateTime.now().toString()},
+        'statusCode': ${options.data},
+        'baseUrl': ${options.baseUrl},
+        'path': ${options.path},
+        'header': ${options.headers},
+        'queryParameters': ${options.queryParameters},
+        'headers': ${options.headers},
+        'method': ${options.method},
+        'requestData': ${options.data},
+}</code>
+    ''',
+    );
+    super.onRequest(options, handler);
+  }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    final projectName = projectId != null ? '#${projectId!}' : '';
-
     if (willSendSuccess) {
       _messageProvider.send(
         message: '''
-$projectName ${const Uuid().v4()}
+$_projectName ${const Uuid().v4()}
 <code>{
   'from': 'onResponse',
   'Time': ${DateTime.now().toString()},
@@ -48,11 +70,9 @@ $projectName ${const Uuid().v4()}
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    final projectName = projectId != null ? '#${projectId!}' : '';
-
     _messageProvider.send(
       message: '''
-$projectName ${const Uuid().v4()}
+$_projectName ${const Uuid().v4()}
 <code>{
   'from': 'onError',
   'Time': ${DateTime.now().toString()},
