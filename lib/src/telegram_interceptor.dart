@@ -32,20 +32,24 @@ class TelegramInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final formData = options.data;
-    var formDataText = options.data;
+    String formDataText = '';
 
     if (formData is FormData) {
       try {
         formDataText = jsonEncode(formData.fields.map((e) => e).toList());
       } catch (e) {
+        log('[bot_interceptor]--->');
         log(e.toString());
       }
       try {
         formDataText = formDataText +
             jsonEncode(formData.files.map((e) => e.value.filename).toList());
       } catch (e) {
+        log('[bot_interceptor]--->');
         log(e.toString());
       }
+    } else {
+      formDataText = options.data;
     }
 
     _messageProvider.send(
@@ -57,7 +61,6 @@ $_projectName
         'statusCode': ${options.data},
         'baseUrl': ${options.baseUrl},
         'path': ${options.path},
-        'header': ${options.headers},
         'queryParameters': ${options.queryParameters},
         'headers': ${options.headers},
         'method': ${options.method},

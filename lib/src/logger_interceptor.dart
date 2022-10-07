@@ -28,21 +28,26 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final formData = options.data;
-    var formDataText = options.data;
+    String formDataText = '';
 
     if (formData is FormData) {
       try {
         formDataText = jsonEncode(formData.fields.map((e) => e).toList());
       } catch (e) {
+        log('[bot_interceptor]--->');
         log(e.toString());
       }
       try {
         formDataText = formDataText +
             jsonEncode(formData.files.map((e) => e.value.filename).toList());
       } catch (e) {
+        log('[bot_interceptor]--->');
         log(e.toString());
       }
+    } else {
+      formDataText = options.data;
     }
+
     _print(prettyJsonStr(
       {
         'from': 'onRequest',
