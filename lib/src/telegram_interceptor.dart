@@ -20,6 +20,7 @@ class TelegramInterceptor extends Interceptor {
       chatId: chatId,
     );
     _projectName = projectId != null ? '#${projectId!}' : '';
+    _projectName = '${_projectName!} ${const Uuid().v4()}';
   }
 
   late TelegramSendMessageProvider _messageProvider;
@@ -29,7 +30,7 @@ class TelegramInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     _messageProvider.send(
       message: '''
-$_projectName ${const Uuid().v4()}
+$_projectName
 <code>{
    'from': 'onRequest',
         'Time': ${DateTime.now().toString()},
@@ -52,7 +53,7 @@ $_projectName ${const Uuid().v4()}
     if (willSendSuccess) {
       _messageProvider.send(
         message: '''
-$_projectName ${const Uuid().v4()}
+$_projectName
 <code>{
   'from': 'onResponse',
   'Time': ${DateTime.now().toString()},
@@ -72,7 +73,7 @@ $_projectName ${const Uuid().v4()}
   void onError(DioError err, ErrorInterceptorHandler handler) {
     _messageProvider.send(
       message: '''
-$_projectName ${const Uuid().v4()}
+$_projectName
 <code>{
   'from': 'onError',
   'Time': ${DateTime.now().toString()},
