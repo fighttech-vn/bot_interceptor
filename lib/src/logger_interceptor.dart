@@ -32,7 +32,8 @@ class LoggerInterceptor extends Interceptor {
     if (formData is FormData) {
       formDataText = jsonEncode(formData.fields.map((e) => e).toList());
       formDataText = formDataText +
-          jsonEncode(formData.files.map((e) => e.value.filename).toList());
+          jsonEncode(
+              formData.files.map((e) => e.value.filename ?? '').toList());
     }
     _print(prettyJsonStr(
       {
