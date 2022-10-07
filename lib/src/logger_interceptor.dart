@@ -39,13 +39,16 @@ class LoggerInterceptor extends Interceptor {
       }
       try {
         formDataText = formDataText +
-            jsonEncode(formData.files.map((e) => e.value.filename).toList());
+            jsonEncode(formData.files
+                .map((e) => {
+                      'key': e.key,
+                      'name': e.value.filename,
+                    })
+                .toList());
       } catch (e) {
         log('[bot_interceptor]--->');
         log(e.toString());
       }
-    } else {
-      formDataText = options.data;
     }
 
     _print(prettyJsonStr(
@@ -58,7 +61,8 @@ class LoggerInterceptor extends Interceptor {
         'queryParameters': options.queryParameters,
         'headers': options.headers,
         'method': options.method,
-        'requestData': formData,
+        'requestData':
+            formDataText.isNotEmpty ? formDataText : options.data?.toString(),
       },
     ));
     super.onRequest(options, handler);

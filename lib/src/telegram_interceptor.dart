@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
 
+import 'logger_interceptor.dart';
 import 'send_message/impl/telegram_send_message_provider.dart';
 
 class TelegramInterceptor extends Interceptor {
@@ -43,29 +44,34 @@ class TelegramInterceptor extends Interceptor {
       }
       try {
         formDataText = formDataText +
-            jsonEncode(formData.files.map((e) => e.value.filename).toList());
+            jsonEncode(formData.files
+                .map((e) => {
+                      'key': e.key,
+                      'name': e.value.filename,
+                    })
+                .toList());
       } catch (e) {
         log('[bot_interceptor]--->');
         log(e.toString());
       }
-    } else {
-      formDataText = options.data;
     }
-
+    final json = prettyJsonStr({
+      'from': 'onRequest',
+      'Time': DateTime.now().toString(),
+      'statusCode': options.data,
+      'baseUrl': options.baseUrl,
+      'path': options.path,
+      'queryParameters': options.queryParameters,
+      'headers': options.headers,
+      'method': options.method,
+      'requestData':
+          formDataText.isNotEmpty ? formDataText : options.data?.toString(),
+    });
     _messageProvider.send(
-      message: '''
-$_projectName
-<code>{
-   'from': 'onRequest',
-        'Time': ${DateTime.now().toString()},
-        'statusCode': ${options.data},
-        'baseUrl': ${options.baseUrl},
-        'path': ${options.path},
-        'queryParameters': ${options.queryParameters},
-        'headers': ${options.headers},
-        'method': ${options.method},
-        'requestData': $formDataText,
-}</code>
+      message: '''$_projectName
+<code>
+$json
+</code>
     ''',
     );
     super.onRequest(options, handler);
@@ -74,17 +80,20 @@ $_projectName
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (willSendSuccess) {
+      final json = prettyJsonStr({
+        'from': 'onResponse',
+        'Time': DateTime.now().toString(),
+        'baseUrl': response.requestOptions.baseUrl,
+        'path': response.requestOptions.path,
+        'method': response.requestOptions.method,
+        'responseData': response.data,
+      });
       _messageProvider.send(
         message: '''
 $_projectName
-<code>{
-  'from': 'onResponse',
-  'Time': ${DateTime.now().toString()},
-  'baseUrl': '${response.requestOptions.baseUrl}',
-  'path': ${response.requestOptions.path},
-  'method': ${response.requestOptions.method},
-  'responseData': ${response.data},
-}</code>
+<code>
+$json
+</code>
     ''',
       );
     }
@@ -93,23 +102,26 @@ $_projectName
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
+    final json = prettyJsonStr({
+      'from': 'onError',
+      'Time': DateTime.now().toString(),
+      'baseUrl': err.requestOptions.baseUrl,
+      'header': err.requestOptions.headers,
+      'path': err.requestOptions.path,
+      'type': err.type,
+      'message': err.message,
+      'statusCode': err.response?.statusCode,
+      'error': err.error,
+      'requestOptionsData': err.requestOptions.data,
+      'responseData': err.response?.data,
+      'raw': err.toString()
+    });
     _messageProvider.send(
       message: '''
 $_projectName
-<code>{
-  'from': 'onError',
-  'Time': ${DateTime.now().toString()},
-  'baseUrl': ${err.requestOptions.baseUrl},
-  'header': ${err.requestOptions.headers},
-  'path': ${err.requestOptions.path},
-  'type': ${err.type},
-  'message': ${err.message},
-  'statusCode': ${err.response?.statusCode},
-  'error': ${err.error},
-  'requestOptionsData': ${err.requestOptions.data},
-  'responseData': ${err.response?.data},
-  'raw': ${err.toString()}
-}</code>
+<code>
+$json
+</code>
     ''',
     );
 
