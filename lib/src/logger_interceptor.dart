@@ -1,6 +1,7 @@
 // Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
@@ -30,10 +31,17 @@ class LoggerInterceptor extends Interceptor {
     var formDataText = options.data;
 
     if (formData is FormData) {
-      formDataText = jsonEncode(formData.fields.map((e) => e).toList());
-      formDataText = formDataText +
-          jsonEncode(
-              formData.files.map((e) => e.value.filename ?? '').toList());
+      try {
+        formDataText = jsonEncode(formData.fields.map((e) => e).toList());
+      } catch (e) {
+        log(e.toString());
+      }
+      try {
+        formDataText = formDataText +
+            jsonEncode(formData.files.map((e) => e.value.filename).toList());
+      } catch (e) {
+        log(e.toString());
+      }
     }
     _print(prettyJsonStr(
       {
@@ -42,7 +50,6 @@ class LoggerInterceptor extends Interceptor {
         'statusCode': options.data,
         'baseUrl': options.baseUrl,
         'path': options.path,
-        'header': options.headers,
         'queryParameters': options.queryParameters,
         'headers': options.headers,
         'method': options.method,

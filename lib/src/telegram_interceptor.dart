@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
@@ -34,9 +35,17 @@ class TelegramInterceptor extends Interceptor {
     var formDataText = options.data;
 
     if (formData is FormData) {
-      formDataText = jsonEncode(formData.fields.map((e) => e).toList());
-      formDataText = formDataText +
-          jsonEncode(formData.files.map((e) => e.value.filename).toList());
+      try {
+        formDataText = jsonEncode(formData.fields.map((e) => e).toList());
+      } catch (e) {
+        log(e.toString());
+      }
+      try {
+        formDataText = formDataText +
+            jsonEncode(formData.files.map((e) => e.value.filename).toList());
+      } catch (e) {
+        log(e.toString());
+      }
     }
 
     _messageProvider.send(
