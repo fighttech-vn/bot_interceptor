@@ -62,7 +62,7 @@ class TelegramInterceptor extends Interceptor {
       'baseUrl': options.baseUrl,
       'path': options.path,
       'queryParameters': options.queryParameters,
-      'headers': options.headers,
+      'header': options.headers,
       'method': options.method,
       'requestData':
           formDataText.isNotEmpty ? formDataText : options.data?.toString(),
@@ -86,6 +86,9 @@ $json
         'baseUrl': response.requestOptions.baseUrl,
         'path': response.requestOptions.path,
         'method': response.requestOptions.method,
+        'header': response.requestOptions.headers,
+        'extra': response.extra,
+        'queryParameters': response.requestOptions.queryParameters,
         'responseData': response.data,
       });
       _messageProvider.send(

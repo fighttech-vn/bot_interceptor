@@ -59,7 +59,7 @@ class LoggerInterceptor extends Interceptor {
         'baseUrl': options.baseUrl,
         'path': options.path,
         'queryParameters': options.queryParameters,
-        'headers': options.headers,
+        'header': options.headers,
         'method': options.method,
         'requestData':
             formDataText.isNotEmpty ? formDataText : options.data?.toString(),
