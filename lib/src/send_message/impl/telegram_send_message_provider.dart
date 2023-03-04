@@ -28,7 +28,6 @@ class TelegramSendMessageProvider extends SendMessageProvider {
         );
       } else {
         final count = message.length ~/ BotInterceptorConstants.limitCharacter;
-        print(count);
 
         for (var i = 0; i < count; i++) {
           final start = BotInterceptorConstants.limitCharacter * i;
