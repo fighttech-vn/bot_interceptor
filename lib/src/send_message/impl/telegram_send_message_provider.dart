@@ -24,7 +24,7 @@ class TelegramSendMessageProvider extends SendMessageProvider {
         await _bot.sendMessage(
           ChatID(chatId),
           message,
-          parseMode: ParseMode.html,
+          parseMode: ParseMode.markdownV2,
         );
       } else {
         final count = message.length ~/ BotInterceptorConstants.limitCharacter;
@@ -34,17 +34,23 @@ class TelegramSendMessageProvider extends SendMessageProvider {
 
           await _bot.sendMessage(
             ChatID(chatId),
-            message.substring(
-                start, start + BotInterceptorConstants.limitCharacter),
-            parseMode: ParseMode.html,
+            '''
+${i != 0 ? '<code>' : ''}
+${message.substring(start, start + BotInterceptorConstants.limitCharacter)}
+</code>
+            ''',
+            parseMode: ParseMode.markdownV2,
           );
         }
 
         await _bot.sendMessage(
           ChatID(chatId),
-          message.substring(
-              BotInterceptorConstants.limitCharacter * count, message.length),
-          parseMode: ParseMode.html,
+          '''
+<code>
+${message.substring(BotInterceptorConstants.limitCharacter * count, message.length)}
+</code>
+            ''',
+          parseMode: ParseMode.markdownV2,
         );
       }
     } catch (e) {

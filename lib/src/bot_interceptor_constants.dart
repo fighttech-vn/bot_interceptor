@@ -1,3 +1,3 @@
 class BotInterceptorConstants {
-  static int limitCharacter = 3000;
+  static int limitCharacter = 4000;
 }

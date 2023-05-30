@@ -1,3 +1,6 @@
+## 0.1.33
+* Upgrade Flutter 3.10 & Dart 3.0
+
 ## 0.0.20
 + Add OnRequest and formdata
 
